@@ -32,4 +32,11 @@ public class PostServiceImpl implements PostService {
         PostDto createdPostDto = postMapper.toDto(createdPost);
         return createdPostDto;
     }
+
+    @Override
+    public List<PostDto> getAllPosts() {
+        List<Post> posts = postRepository.findAll();
+        List<PostDto> postsDtos = posts.stream().map(postMapper::toDto).collect(toList());
+        return postsDtos;
+    }
 }

@@ -1,6 +1,7 @@
 package com.github.pedroluiznogueira.blog.controller;
 
 import com.github.pedroluiznogueira.blog.dto.PostDto;
+import com.github.pedroluiznogueira.blog.entity.Post;
 import com.github.pedroluiznogueira.blog.service.impl.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,12 @@ public class PostController {
     @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
         PostDto postDtoResponse = postService.createPost(postDto);
-        return new ResponseEntity<>(postDtoResponse, HttpStatus.CREATED);
+        return ResponseEntity.status(201).body(postDtoResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> postsDtosResponse = postService.getAllPosts();
+        return ResponseEntity.status(200).body(postsDtosResponse);
     }
 }
