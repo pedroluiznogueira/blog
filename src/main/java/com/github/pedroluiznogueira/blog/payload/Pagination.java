@@ -6,15 +6,16 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Getter
-public class Pagination {
-    private final List<PostDto> content;
-    private final Integer pageNumber;
-    private final Integer pageSize;
-    private final Long totalElements;
-    private final Integer totalPages;
-    private final Boolean isLast;
+@NoArgsConstructor
+public class Pagination<T> {
+    private List<T> content;
+    private Integer pageNumber;
+    private Integer pageSize;
+    private Long totalElements;
+    private Integer totalPages;
+    private Boolean isLast;
 
-    private Pagination(PaginationBuilder paginationBuilder) {
+    private Pagination(PaginationBuilder<T> paginationBuilder) {
         this.content = paginationBuilder.content;
         this.pageNumber = paginationBuilder.pageNumber;
         this.pageSize = paginationBuilder.pageSize;
@@ -23,51 +24,52 @@ public class Pagination {
         this.isLast = paginationBuilder.isLast;
     }
 
-    public static PaginationBuilder builder() {
-        return new PaginationBuilder();
+    public PaginationBuilder<T> builder() {
+        PaginationBuilder<T> paginationBuilder = new PaginationBuilder<T>();
+        return paginationBuilder;
     }
 
     @NoArgsConstructor
-    public static class PaginationBuilder {
-        private List<PostDto> content;
+    public static class PaginationBuilder<T> {
+        private List<T> content;
         private Integer pageNumber;
         private Integer pageSize;
         private Long totalElements;
         private Integer totalPages;
         private Boolean isLast;
 
-        public PaginationBuilder content(List<PostDto> content) {
+        public PaginationBuilder<T> content(List<T> content) {
             this.content = content;
             return this;
         }
 
-        public PaginationBuilder pageNumber(Integer pageNumber) {
+        public PaginationBuilder<T> pageNumber(Integer pageNumber) {
             this.pageNumber = pageNumber;
             return this;
         }
 
-        public PaginationBuilder pageSize(Integer pageSize) {
+        public PaginationBuilder<T> pageSize(Integer pageSize) {
             this.pageSize = pageSize;
             return this;
         }
 
-        public PaginationBuilder totalElements(Long totalElements) {
+        public PaginationBuilder<T> totalElements(Long totalElements) {
             this.totalElements = totalElements;
             return this;
         }
 
-        public PaginationBuilder totalPages(Integer totalPages) {
+        public PaginationBuilder<T> totalPages(Integer totalPages) {
             this.totalPages = totalPages;
             return this;
         }
 
-        public PaginationBuilder isLast(Boolean isLast) {
+        public PaginationBuilder<T> isLast(Boolean isLast) {
             this.isLast = isLast;
             return this;
         }
 
-        public Pagination build() {
-            Pagination pagination = new Pagination(this);
+        public Pagination<T> build() {
+            Pagination<T> pagination = new Pagination<T>(this);
             return  pagination;
         }
     }

@@ -3,6 +3,7 @@ package com.github.pedroluiznogueira.blog.controller;
 import com.github.pedroluiznogueira.blog.controller.abstraction.Controller;
 import com.github.pedroluiznogueira.blog.payload.PostDto;
 import com.github.pedroluiznogueira.blog.payload.Pagination;
+import com.github.pedroluiznogueira.blog.service.PostPaginationService;
 import com.github.pedroluiznogueira.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class PostController implements Controller<PostDto> {
 
     private final PostService postService;
+    private final PostPaginationService postPaginationService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, PostPaginationService postPaginationService) {
         this.postService = postService;
+        this.postPaginationService = postPaginationService;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class PostController implements Controller<PostDto> {
             @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
     ) {
-        Pagination postsDtosResponse = postService.getAll(pageNumber, pageSize, sortBy, sortDirection);
+        Pagination postsDtosResponse = postPaginationService.getAll(pageNumber, pageSize, sortBy, sortDirection);
         return ResponseEntity.status(200).body(postsDtosResponse);
     }
 
