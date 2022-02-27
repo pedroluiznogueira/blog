@@ -32,4 +32,10 @@ public class PostController {
         List<PostDto> postsDtosResponse = postService.getAllPosts();
         return ResponseEntity.status(200).body(postsDtosResponse);
     }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable ("postId") Long postId) {
+        PostDto postDtoResponse = postService.getPostById(postId);
+        return ResponseEntity.status(200).body(postDtoResponse);
+    }
 }

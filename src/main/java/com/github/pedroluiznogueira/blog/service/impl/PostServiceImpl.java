@@ -3,12 +3,15 @@ package com.github.pedroluiznogueira.blog.service.impl;
 import com.github.pedroluiznogueira.blog.dto.PostDto;
 import com.github.pedroluiznogueira.blog.dto.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.entity.Post;
+import com.github.pedroluiznogueira.blog.exception.ResourceNotFoundException;
 import com.github.pedroluiznogueira.blog.repository.PostRepository;
 import com.github.pedroluiznogueira.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -38,5 +41,12 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = postRepository.findAll();
         List<PostDto> postsDtos = posts.stream().map(postMapper::toDto).collect(toList());
         return postsDtos;
+    }
+
+    @Override
+    public PostDto getPostById(Long postId) {
+        Post foundPost = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
+        PostDto foundPostDto = postMapper.toDto(foundPost);
+        return foundPostDto;
     }
 }
