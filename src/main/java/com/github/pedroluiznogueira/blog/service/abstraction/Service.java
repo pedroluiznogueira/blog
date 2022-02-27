@@ -7,7 +7,7 @@ import java.util.List;
 public interface Service<T> {
     T create(T dto);
 
-    List<T> getAll();
+    List<T> getAll(Integer pageNumber, Integer pageSize);
 
     T getById(Long id);
 

@@ -29,8 +29,11 @@ public class PostController implements Controller<PostDto> {
 
     @Override
     @GetMapping
-    public ResponseEntity<List<PostDto>> getAll() {
-        List<PostDto> postsDtosResponse = postService.getAll();
+    public ResponseEntity<List<PostDto>> getAll(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+    ) {
+        List<PostDto> postsDtosResponse = postService.getAll(pageNumber, pageSize);
         return ResponseEntity.status(200).body(postsDtosResponse);
     }
 
