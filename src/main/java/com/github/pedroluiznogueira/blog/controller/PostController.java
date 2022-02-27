@@ -40,4 +40,11 @@ public class PostController implements Controller<PostDto> {
         PostDto postDtoResponse = postService.getById(postId);
         return ResponseEntity.status(200).body(postDtoResponse);
     }
+
+    @Override
+    @PutMapping("/{postId}")
+    public ResponseEntity<PostDto> update(@PathVariable ("postId") Long postId, @RequestBody PostDto postDto) {
+        PostDto postDtoResponse = postService.update(postId, postDto);
+        return ResponseEntity.status(200).body(postDtoResponse);
+    }
 }

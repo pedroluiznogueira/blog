@@ -13,5 +13,4 @@ public class Error {
     private Date timestamp;
     private String message;
     private String detail;
-
 }

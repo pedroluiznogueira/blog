@@ -41,8 +41,23 @@ public class PostService implements Service<PostDto> {
 
     @Override
     public PostDto getById(Long postId) {
-        Post foundPost = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
+        Post foundPost = checkById(postId);
         PostDto foundPostDto = postMapper.toDto(foundPost);
         return foundPostDto;
+    }
+
+    @Override
+    public PostDto update(Long postId, PostDto postDto) {
+        Post foundPost = checkById(postId);
+        foundPost.setTitle(postDto.getTitle());
+        foundPost.setDescription(postDto.getDescription());
+        foundPost.setContent(postDto.getContent());
+        Post updatedPost = postRepository.save(foundPost);
+        PostDto updatedPostDto = postMapper.toDto(updatedPost);
+        return updatedPostDto;
+    }
+
+    private Post checkById(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
     }
 }

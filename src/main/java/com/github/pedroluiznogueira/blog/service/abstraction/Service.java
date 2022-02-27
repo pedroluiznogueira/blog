@@ -11,4 +11,6 @@ public interface Service<T> {
 
     T getById(Long id);
 
+    T update(Long id, T dto);
+
 }
