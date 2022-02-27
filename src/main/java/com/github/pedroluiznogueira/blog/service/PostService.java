@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -40,8 +41,11 @@ public class PostService implements Service<PostDto> {
     }
 
     @Override
-    public Pagination getAll(Integer pageNumber, Integer pageSize, String sortBy) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+    public Pagination getAll(Integer pageNumber, Integer pageSize, String sortBy, String sortDirection) {
+
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Post> postPages = postRepository.findAll(pageable);
         List<Post> posts = postPages.getContent();
 
