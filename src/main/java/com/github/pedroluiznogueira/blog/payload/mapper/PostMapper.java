@@ -1,6 +1,6 @@
-package com.github.pedroluiznogueira.blog.dto.mapper;
+package com.github.pedroluiznogueira.blog.payload.mapper;
 
-import com.github.pedroluiznogueira.blog.dto.PostDto;
+import com.github.pedroluiznogueira.blog.payload.PostDto;
 import com.github.pedroluiznogueira.blog.entity.Post;
 import org.springframework.stereotype.Component;
 

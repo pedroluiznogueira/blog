@@ -1,4 +1,4 @@
-package com.github.pedroluiznogueira.blog.dto;
+package com.github.pedroluiznogueira.blog.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

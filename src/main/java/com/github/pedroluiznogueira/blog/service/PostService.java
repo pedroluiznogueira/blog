@@ -1,7 +1,8 @@
 package com.github.pedroluiznogueira.blog.service;
 
-import com.github.pedroluiznogueira.blog.dto.PostDto;
-import com.github.pedroluiznogueira.blog.dto.mapper.PostMapper;
+import com.github.pedroluiznogueira.blog.payload.PostDto;
+import com.github.pedroluiznogueira.blog.payload.PostResponse;
+import com.github.pedroluiznogueira.blog.payload.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.entity.Post;
 import com.github.pedroluiznogueira.blog.exception.ResourceNotFoundException;
 import com.github.pedroluiznogueira.blog.repository.PostRepository;
@@ -38,14 +39,16 @@ public class PostService implements Service<PostDto> {
     }
 
     @Override
-    public List<PostDto> getAll(Integer pageNumber, Integer pageSize) {
+    public PostResponse getAll(Integer pageNumber, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post> postPages = postRepository.findAll(pageable);
         List<Post> posts = postPages.getContent();
 
         List<PostDto> postsDtos = posts.stream().map(postMapper::toDto).collect(toList());
 
-        return postsDtos;
+        PostResponse postResponse = new PostResponse(postsDtos, postPages.getNumber(), postPages.getSize(), postPages.getTotalElements(), postPages.getTotalPages(), postPages.isLast());
+
+        return postResponse;
     }
 
     @Override

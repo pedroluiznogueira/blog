@@ -1,7 +1,8 @@
 package com.github.pedroluiznogueira.blog.controller;
 
 import com.github.pedroluiznogueira.blog.controller.abstraction.Controller;
-import com.github.pedroluiznogueira.blog.dto.PostDto;
+import com.github.pedroluiznogueira.blog.payload.PostDto;
+import com.github.pedroluiznogueira.blog.payload.PostResponse;
 import com.github.pedroluiznogueira.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +30,11 @@ public class PostController implements Controller<PostDto> {
 
     @Override
     @GetMapping
-    public ResponseEntity<List<PostDto>> getAll(
+    public ResponseEntity<PostResponse> getAll(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
     ) {
-        List<PostDto> postsDtosResponse = postService.getAll(pageNumber, pageSize);
+        PostResponse postsDtosResponse = postService.getAll(pageNumber, pageSize);
         return ResponseEntity.status(200).body(postsDtosResponse);
     }
 
