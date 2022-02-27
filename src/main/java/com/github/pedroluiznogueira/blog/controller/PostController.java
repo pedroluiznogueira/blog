@@ -5,6 +5,7 @@ import com.github.pedroluiznogueira.blog.payload.PostDto;
 import com.github.pedroluiznogueira.blog.payload.Pagination;
 import com.github.pedroluiznogueira.blog.service.PostPaginationService;
 import com.github.pedroluiznogueira.blog.service.PostService;
+import com.github.pedroluiznogueira.blog.utility.PostFinal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +33,10 @@ public class PostController implements Controller<PostDto> {
     @Override
     @GetMapping
     public ResponseEntity<Pagination> getAll(
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
-            @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
+            @RequestParam(value = "pageNumber", defaultValue = PostFinal.DEFAULT_PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = PostFinal.DEFAULT_PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = PostFinal.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = PostFinal.DEFAULT_SORT_DIRECTION, required = false) String sortDirection
     ) {
         Pagination postsDtosResponse = postPaginationService.getAll(pageNumber, pageSize, sortBy, sortDirection);
         return ResponseEntity.status(200).body(postsDtosResponse);
