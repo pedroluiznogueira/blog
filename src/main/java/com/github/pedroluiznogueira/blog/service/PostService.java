@@ -1,7 +1,7 @@
 package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.payload.PostDto;
-import com.github.pedroluiznogueira.blog.payload.PostResponse;
+import com.github.pedroluiznogueira.blog.payload.Pagination;
 import com.github.pedroluiznogueira.blog.payload.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.entity.Post;
 import com.github.pedroluiznogueira.blog.exception.ResourceNotFoundException;
@@ -39,16 +39,23 @@ public class PostService implements Service<PostDto> {
     }
 
     @Override
-    public PostResponse getAll(Integer pageNumber, Integer pageSize) {
+    public Pagination getAll(Integer pageNumber, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post> postPages = postRepository.findAll(pageable);
         List<Post> posts = postPages.getContent();
 
-        List<PostDto> postsDtos = posts.stream().map(postMapper::toDto).collect(toList());
+        List<PostDto> content = posts.stream().map(postMapper::toDto).collect(toList());
 
-        PostResponse postResponse = new PostResponse(postsDtos, postPages.getNumber(), postPages.getSize(), postPages.getTotalElements(), postPages.getTotalPages(), postPages.isLast());
+        Pagination pagination = Pagination.builder()
+                .content(content)
+                .pageNumber(postPages.getNumber())
+                .pageSize(postPages.getSize())
+                .totalElements(postPages.getTotalElements())
+                .totalPages(postPages.getTotalPages())
+                .isLast(postPages.isLast())
+                .build();
 
-        return postResponse;
+        return pagination;
     }
 
     @Override

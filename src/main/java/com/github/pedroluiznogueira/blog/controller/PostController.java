@@ -2,13 +2,11 @@ package com.github.pedroluiznogueira.blog.controller;
 
 import com.github.pedroluiznogueira.blog.controller.abstraction.Controller;
 import com.github.pedroluiznogueira.blog.payload.PostDto;
-import com.github.pedroluiznogueira.blog.payload.PostResponse;
+import com.github.pedroluiznogueira.blog.payload.Pagination;
 import com.github.pedroluiznogueira.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -30,11 +28,11 @@ public class PostController implements Controller<PostDto> {
 
     @Override
     @GetMapping
-    public ResponseEntity<PostResponse> getAll(
+    public ResponseEntity<Pagination> getAll(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
     ) {
-        PostResponse postsDtosResponse = postService.getAll(pageNumber, pageSize);
+        Pagination postsDtosResponse = postService.getAll(pageNumber, pageSize);
         return ResponseEntity.status(200).body(postsDtosResponse);
     }
 

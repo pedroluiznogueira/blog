@@ -1,13 +1,11 @@
 package com.github.pedroluiznogueira.blog.service.abstraction;
 
-import com.github.pedroluiznogueira.blog.payload.PostResponse;
-
-import java.util.List;
+import com.github.pedroluiznogueira.blog.payload.Pagination;
 
 public interface Service<T> {
     T create(T dto);
 
-    PostResponse getAll(Integer pageNumber, Integer pageSize);
+    Pagination getAll(Integer pageNumber, Integer pageSize);
 
     T getById(Long id);
 
