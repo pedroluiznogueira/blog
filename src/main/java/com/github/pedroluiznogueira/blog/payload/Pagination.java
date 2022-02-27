@@ -1,9 +1,11 @@
 package com.github.pedroluiznogueira.blog.payload;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Getter
 public class Pagination {
     private final List<PostDto> content;
     private final Integer pageNumber;

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class PostService implements Service<PostDto> {
     }
 
     @Override
-    public Pagination getAll(Integer pageNumber, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public Pagination getAll(Integer pageNumber, Integer pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
         Page<Post> postPages = postRepository.findAll(pageable);
         List<Post> posts = postPages.getContent();
 
@@ -60,7 +61,7 @@ public class PostService implements Service<PostDto> {
 
     @Override
     public PostDto getById(Long postId) {
-        Post foundPost = checkById(postId);
+        Post foundPost = checkIfExistsById(postId);
 
         PostDto foundPostDto = postMapper.toDto(foundPost);
 
@@ -69,7 +70,7 @@ public class PostService implements Service<PostDto> {
 
     @Override
     public PostDto update(Long postId, PostDto postDto) {
-        Post foundPost = checkById(postId);
+        Post foundPost = checkIfExistsById(postId);
 
         foundPost.setTitle(postDto.getTitle());
         foundPost.setDescription(postDto.getDescription());
@@ -83,14 +84,14 @@ public class PostService implements Service<PostDto> {
 
     @Override
     public String delete(Long postId) {
-        Post foundPost = checkById(postId);
+        Post foundPost = checkIfExistsById(postId);
 
         postRepository.delete(foundPost);
 
         return "post succesfully deleted";
     }
 
-    private Post checkById(Long postId) {
+    private Post checkIfExistsById(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
     }
 }

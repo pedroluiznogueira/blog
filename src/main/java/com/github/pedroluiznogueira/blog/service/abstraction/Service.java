@@ -5,7 +5,7 @@ import com.github.pedroluiznogueira.blog.payload.Pagination;
 public interface Service<T> {
     T create(T dto);
 
-    Pagination getAll(Integer pageNumber, Integer pageSize);
+    Pagination getAll(Integer pageNumber, Integer pageSize, String sortBy);
 
     T getById(Long id);
 

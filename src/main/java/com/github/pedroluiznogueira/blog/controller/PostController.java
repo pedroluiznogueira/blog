@@ -30,9 +30,10 @@ public class PostController implements Controller<PostDto> {
     @GetMapping
     public ResponseEntity<Pagination> getAll(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
     ) {
-        Pagination postsDtosResponse = postService.getAll(pageNumber, pageSize);
+        Pagination postsDtosResponse = postService.getAll(pageNumber, pageSize, sortBy);
         return ResponseEntity.status(200).body(postsDtosResponse);
     }
 

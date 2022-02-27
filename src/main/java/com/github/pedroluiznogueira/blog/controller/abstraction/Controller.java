@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public interface Controller<T> {
     ResponseEntity<T> create(@RequestBody T dto);
 
-    ResponseEntity<Pagination> getAll(@RequestParam Integer pageNumber, Integer pageSize);
+    ResponseEntity<Pagination> getAll(@RequestParam Integer pageNumber, @RequestParam Integer pageSize, @RequestParam String sortBy);
 
     ResponseEntity<T> getById(Long id);
 
