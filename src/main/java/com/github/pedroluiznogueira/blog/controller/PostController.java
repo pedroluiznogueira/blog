@@ -47,4 +47,11 @@ public class PostController implements Controller<PostDto> {
         PostDto postDtoResponse = postService.update(postId, postDto);
         return ResponseEntity.status(200).body(postDtoResponse);
     }
+
+    @Override
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<String> delete(@PathVariable ("postId") Long postId) {
+        String response = postService.delete(postId);
+        return ResponseEntity.status(200).body(response);
+    }
 }

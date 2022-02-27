@@ -17,4 +17,5 @@ public interface Controller<T> {
 
     ResponseEntity<T> update(@PathVariable ("id") Long id, @RequestBody T dto);
 
+    ResponseEntity<String> delete(@PathVariable ("id") Long id);
 }

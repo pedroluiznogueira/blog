@@ -57,6 +57,13 @@ public class PostService implements Service<PostDto> {
         return updatedPostDto;
     }
 
+    @Override
+    public String delete(Long postId) {
+        Post foundPost = checkById(postId);
+        postRepository.delete(foundPost);
+        return "post succesfully deleted";
+    }
+
     private Post checkById(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
     }

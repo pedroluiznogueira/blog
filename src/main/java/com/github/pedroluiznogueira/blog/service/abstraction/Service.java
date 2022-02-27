@@ -13,4 +13,5 @@ public interface Service<T> {
 
     T update(Long id, T dto);
 
+    String delete(Long id);
 }
