@@ -57,8 +57,18 @@ public class CommentService implements BusinessRule<CommentDto> {
     }
 
     @Override
-    public CommentDto update(Long id, CommentDto dto) {
-        return null;
+    public CommentDto update(Long commentId, CommentDto commentDto) {
+        Comment foundComment = checkIfExistsById(commentId);
+        Post post = postService.checkIfExistsById(commentDto.getPostId());
+
+        foundComment.setName(commentDto.getName());
+        foundComment.setEmail(commentDto.getEmail());
+        foundComment.setBody(commentDto.getBody());
+        foundComment.setPost(post);
+
+        Comment updatedComment = commentRepository.save(foundComment);
+
+        return commentMapper.toDto(updatedComment);
     }
 
     @Override

@@ -60,8 +60,10 @@ public class CommentController implements Controller<CommentDto> {
     }
 
     @Override
-    public ResponseEntity<CommentDto> update(Long id, CommentDto dto) {
-        return null;
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentDto> update(@PathVariable ("commentId") Long commentId, @RequestBody CommentDto commentDto) {
+        CommentDto commentDtoResponse = commentService.update(commentId, commentDto);
+        return ResponseEntity.status(200).body(commentDtoResponse);
     }
 
     @Override
