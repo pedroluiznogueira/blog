@@ -1,12 +1,12 @@
 package com.github.pedroluiznogueira.blog.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,14 +26,9 @@ public class Comment {
     @Column(name = "body", nullable = false)
     private String body;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    public Comment(String name, String email, String body, Post post) {
-        this.name = name;
-        this.email = email;
-        this.body = body;
-        this.post = post;
-    }
 }

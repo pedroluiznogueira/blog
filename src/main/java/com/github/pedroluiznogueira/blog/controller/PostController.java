@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController implements Controller<PostDto> {
@@ -25,7 +27,7 @@ public class PostController implements Controller<PostDto> {
 
     @Override
     @PostMapping
-    public ResponseEntity<PostDto> create(@RequestBody PostDto postDto) {
+    public ResponseEntity<PostDto> create(@Valid @RequestBody PostDto postDto) {
         PostDto postDtoResponse = postService.create(postDto);
         return ResponseEntity.status(201).body(postDtoResponse);
     }

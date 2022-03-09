@@ -1,6 +1,7 @@
 package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.entity.Post;
+import com.github.pedroluiznogueira.blog.payload.dto.CommentDto;
 import com.github.pedroluiznogueira.blog.payload.pagination.Pagination;
 import com.github.pedroluiznogueira.blog.payload.dto.PostDto;
 import com.github.pedroluiznogueira.blog.repository.PostRepository;
@@ -14,8 +15,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @Service
 public class PostPaginationService implements Paginate<PostDto, Post> {
@@ -56,6 +59,7 @@ public class PostPaginationService implements Paginate<PostDto, Post> {
     public Pagination<PostDto> formatPaginationContent(Page<Post> postPages) {
         List<Post> contentToFormat = postPages.getContent();
         List<PostDto> formattedContent = contentToFormat.stream().map((post) -> modelMapper.map(post, PostDto.class)).collect(toList());
+        formattedContent.forEach((post) -> post.setComments(post.getComments().stream().map((comment) -> modelMapper.map(comment, CommentDto.class)).collect(toSet())));
         Pagination<PostDto> pagination = new Pagination<PostDto>().builder()
                 .content(formattedContent)
                 .pageNumber(postPages.getNumber())
