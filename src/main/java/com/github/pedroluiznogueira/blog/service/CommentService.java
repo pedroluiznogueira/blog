@@ -59,12 +59,10 @@ public class CommentService implements BusinessRule<CommentDto> {
     @Override
     public CommentDto update(Long commentId, CommentDto commentDto) {
         Comment foundComment = checkIfExistsById(commentId);
-        Post post = postService.checkIfExistsById(commentDto.getPostId());
 
         foundComment.setName(commentDto.getName());
         foundComment.setEmail(commentDto.getEmail());
         foundComment.setBody(commentDto.getBody());
-        foundComment.setPost(post);
 
         Comment updatedComment = commentRepository.save(foundComment);
 
@@ -72,8 +70,12 @@ public class CommentService implements BusinessRule<CommentDto> {
     }
 
     @Override
-    public String delete(Long id) {
-        return null;
+    public String delete(Long commentId) {
+        Comment foundComment = checkIfExistsById(commentId);
+
+        commentRepository.delete(foundComment);
+
+        return "comment succesfully deleted";
     }
 
     private Comment checkIfExistsById(Long commentId) {

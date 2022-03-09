@@ -67,7 +67,9 @@ public class CommentController implements Controller<CommentDto> {
     }
 
     @Override
-    public ResponseEntity<String> delete(Long id) {
-        return null;
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<String> delete(@PathVariable ("commentId") Long commentId) {
+        String response = commentService.delete(commentId);
+        return ResponseEntity.status(200).body(response);
     }
 }
