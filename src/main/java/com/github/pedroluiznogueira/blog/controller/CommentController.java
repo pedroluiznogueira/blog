@@ -6,6 +6,7 @@ import com.github.pedroluiznogueira.blog.payload.Pagination;
 import com.github.pedroluiznogueira.blog.service.CommentPaginationService;
 import com.github.pedroluiznogueira.blog.service.CommentService;
 import com.github.pedroluiznogueira.blog.utility.pagination.Const;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +53,10 @@ public class CommentController implements Controller<CommentDto> {
     }
 
     @Override
-    public ResponseEntity<CommentDto> getById(Long id) {
-        return null;
+    @GetMapping("/{commentId}")
+    public ResponseEntity<CommentDto> getById(@PathVariable ("commentId") Long commentId) {
+        CommentDto commentDtoResponse = commentService.getById(commentId);
+        return ResponseEntity.status(200).body(commentDtoResponse);
     }
 
     @Override

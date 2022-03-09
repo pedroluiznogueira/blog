@@ -2,6 +2,7 @@ package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.entity.Comment;
 import com.github.pedroluiznogueira.blog.entity.Post;
+import com.github.pedroluiznogueira.blog.exception.ResourceNotFoundException;
 import com.github.pedroluiznogueira.blog.payload.dto.CommentDto;
 import com.github.pedroluiznogueira.blog.payload.mapper.CommentMapper;
 import com.github.pedroluiznogueira.blog.repository.CommentRepository;
@@ -49,8 +50,10 @@ public class CommentService implements BusinessRule<CommentDto> {
     }
 
     @Override
-    public CommentDto getById(Long id) {
-        return null;
+    public CommentDto getById(Long commentId) {
+        Comment foundComment = checkIfExistsById(commentId);
+
+        return commentMapper.toDto(foundComment);
     }
 
     @Override
@@ -62,4 +65,8 @@ public class CommentService implements BusinessRule<CommentDto> {
     public String delete(Long id) {
         return null;
     }
+
+    private Comment checkIfExistsById(Long commentId) {
+        return commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("comment", "id", commentId));
+    };
 }
