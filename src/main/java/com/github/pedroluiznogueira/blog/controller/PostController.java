@@ -53,7 +53,7 @@ public class PostController implements Controller<PostDto> {
 
     @Override
     @PutMapping("/{postId}")
-    public ResponseEntity<PostDto> update(@PathVariable ("postId") Long postId, @RequestBody PostDto postDto) {
+    public ResponseEntity<PostDto> update(@PathVariable ("postId") Long postId, @Valid @RequestBody PostDto postDto) {
         PostDto postDtoResponse = postService.update(postId, postDto);
         return ResponseEntity.status(200).body(postDtoResponse);
     }

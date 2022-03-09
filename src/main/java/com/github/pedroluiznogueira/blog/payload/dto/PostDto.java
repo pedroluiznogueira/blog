@@ -22,7 +22,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDto extends ResponseEntityExceptionHandler {
+public class PostDto {
 
     @NotEmpty @Size(min = 2, message = "title should have at least 2 characters")
     private String title;
@@ -30,15 +30,9 @@ public class PostDto extends ResponseEntityExceptionHandler {
     @NotEmpty @Size(min = 10, message = "description should have at least 10 characters")
     private String description;
 
-    @NotEmpty
+    @NotEmpty(message = "content shouldn't be empty")
     private String content;
 
     private Set<CommentDto> comments = new HashSet<>();
-
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        Error error = new Error(new Date(), ex.getMessage(), request.getDescription(false));
-        return ResponseEntity.status(404).body(error);
-    }
 
 }
