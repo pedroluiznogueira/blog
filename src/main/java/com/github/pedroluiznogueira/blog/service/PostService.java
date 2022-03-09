@@ -5,11 +5,12 @@ import com.github.pedroluiznogueira.blog.payload.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.entity.Post;
 import com.github.pedroluiznogueira.blog.exception.ResourceNotFoundException;
 import com.github.pedroluiznogueira.blog.repository.PostRepository;
-import com.github.pedroluiznogueira.blog.service.abstraction.Service;
+import com.github.pedroluiznogueira.blog.service.abstraction.BusinessRule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@org.springframework.stereotype.Service
-public class PostService implements Service<PostDto> {
+@Service
+public class PostService implements BusinessRule<PostDto> {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;
@@ -62,7 +63,7 @@ public class PostService implements Service<PostDto> {
         return "post succesfully deleted";
     }
 
-    private Post checkIfExistsById(Long postId) {
+    public Post checkIfExistsById(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
     }
 }

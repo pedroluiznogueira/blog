@@ -2,7 +2,7 @@ package com.github.pedroluiznogueira.blog.service.abstraction;
 
 import com.github.pedroluiznogueira.blog.payload.Pagination;
 
-public interface Service<T> {
+public interface BusinessRule<T> {
     T create(T dto);
 
     T getById(Long id);
