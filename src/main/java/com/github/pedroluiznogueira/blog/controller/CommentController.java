@@ -1,11 +1,9 @@
 package com.github.pedroluiznogueira.blog.controller;
 
 import com.github.pedroluiznogueira.blog.controller.abstraction.Controller;
-import com.github.pedroluiznogueira.blog.payload.CommentDto;
+import com.github.pedroluiznogueira.blog.payload.dto.CommentDto;
 import com.github.pedroluiznogueira.blog.payload.Pagination;
-import com.github.pedroluiznogueira.blog.payload.PostDto;
 import com.github.pedroluiznogueira.blog.service.CommentService;
-import com.github.pedroluiznogueira.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

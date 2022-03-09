@@ -1,6 +1,6 @@
 package com.github.pedroluiznogueira.blog.service;
 
-import com.github.pedroluiznogueira.blog.payload.PostDto;
+import com.github.pedroluiznogueira.blog.payload.dto.PostDto;
 import com.github.pedroluiznogueira.blog.payload.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.entity.Post;
 import com.github.pedroluiznogueira.blog.exception.ResourceNotFoundException;
@@ -23,7 +23,7 @@ public class PostService implements BusinessRule<PostDto> {
 
     @Override
     public PostDto create(PostDto postDto) {
-        Post post = postMapper.toPost(postDto);
+        Post post = postMapper.toEntity(postDto);
         Post createdPost = postRepository.save(post);
 
         return postMapper.toDto(createdPost);

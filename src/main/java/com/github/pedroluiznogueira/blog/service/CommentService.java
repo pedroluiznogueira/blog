@@ -1,8 +1,7 @@
 package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.entity.Comment;
-import com.github.pedroluiznogueira.blog.entity.Post;
-import com.github.pedroluiznogueira.blog.payload.CommentDto;
+import com.github.pedroluiznogueira.blog.payload.dto.CommentDto;
 import com.github.pedroluiznogueira.blog.payload.mapper.CommentMapper;
 import com.github.pedroluiznogueira.blog.repository.CommentRepository;
 import com.github.pedroluiznogueira.blog.service.abstraction.BusinessRule;
@@ -24,7 +23,7 @@ public class CommentService implements BusinessRule<CommentDto> {
 
     @Override
     public CommentDto create(CommentDto commentDto) {
-        Comment comment = commentMapper.toComment(commentDto);
+        Comment comment = commentMapper.toEntity(commentDto);
         Comment createdComment = commentRepository.save(comment);
 
         return commentMapper.toDto(createdComment);

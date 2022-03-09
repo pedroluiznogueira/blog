@@ -2,7 +2,7 @@ package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.entity.Post;
 import com.github.pedroluiznogueira.blog.payload.Pagination;
-import com.github.pedroluiznogueira.blog.payload.PostDto;
+import com.github.pedroluiznogueira.blog.payload.dto.PostDto;
 import com.github.pedroluiznogueira.blog.payload.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.repository.PostRepository;
 import com.github.pedroluiznogueira.blog.service.abstraction.Paginate;

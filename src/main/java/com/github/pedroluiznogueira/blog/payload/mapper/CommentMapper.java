@@ -2,13 +2,14 @@ package com.github.pedroluiznogueira.blog.payload.mapper;
 
 import com.github.pedroluiznogueira.blog.entity.Comment;
 import com.github.pedroluiznogueira.blog.entity.Post;
-import com.github.pedroluiznogueira.blog.payload.CommentDto;
+import com.github.pedroluiznogueira.blog.payload.dto.CommentDto;
+import com.github.pedroluiznogueira.blog.payload.mapper.abstraction.Mapper;
 import com.github.pedroluiznogueira.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommentMapper {
+public class CommentMapper implements Mapper<CommentDto, Comment> {
 
     private PostService postService;
 
@@ -21,7 +22,7 @@ public class CommentMapper {
         return new CommentDto(comment.getName(), comment.getEmail(), comment.getBody(), comment.getPost().getId());
     }
 
-    public Comment toComment(CommentDto commentDto) {
+    public Comment toEntity(CommentDto commentDto) {
         Post commentPost = postService.checkIfExistsById(commentDto.getPostId());
         return new Comment(commentDto.getName(), commentDto.getEmail(), commentDto.getBody(), commentPost);
     }
