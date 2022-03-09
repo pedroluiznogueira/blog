@@ -1,11 +1,11 @@
 package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.entity.Post;
-import com.github.pedroluiznogueira.blog.payload.Pagination;
+import com.github.pedroluiznogueira.blog.payload.pagination.Pagination;
 import com.github.pedroluiznogueira.blog.payload.dto.PostDto;
-import com.github.pedroluiznogueira.blog.payload.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.repository.PostRepository;
 import com.github.pedroluiznogueira.blog.service.abstraction.Paginate;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,12 +21,12 @@ import static java.util.stream.Collectors.toList;
 public class PostPaginationService implements Paginate<PostDto, Post> {
 
     private final PostRepository postRepository;
-    private final PostMapper postMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public PostPaginationService(PostRepository postRepository, PostMapper postMapper) {
+    public PostPaginationService(PostRepository postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
-        this.postMapper = postMapper;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PostPaginationService implements Paginate<PostDto, Post> {
     @Override
     public Pagination<PostDto> formatPaginationContent(Page<Post> postPages) {
         List<Post> contentToFormat = postPages.getContent();
-        List<PostDto> formattedContent = contentToFormat.stream().map(postMapper::toDto).collect(toList());
+        List<PostDto> formattedContent = contentToFormat.stream().map((post) -> modelMapper.map(post, PostDto.class)).collect(toList());
         Pagination<PostDto> pagination = new Pagination<PostDto>().builder()
                 .content(formattedContent)
                 .pageNumber(postPages.getNumber())

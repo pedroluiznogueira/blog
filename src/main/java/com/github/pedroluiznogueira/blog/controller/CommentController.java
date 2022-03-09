@@ -2,17 +2,15 @@ package com.github.pedroluiznogueira.blog.controller;
 
 import com.github.pedroluiznogueira.blog.controller.abstraction.Controller;
 import com.github.pedroluiznogueira.blog.payload.dto.CommentDto;
-import com.github.pedroluiznogueira.blog.payload.Pagination;
+import com.github.pedroluiznogueira.blog.payload.pagination.Pagination;
 import com.github.pedroluiznogueira.blog.service.CommentPaginationService;
 import com.github.pedroluiznogueira.blog.service.CommentService;
 import com.github.pedroluiznogueira.blog.utility.pagination.Const;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/comments")

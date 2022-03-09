@@ -1,11 +1,11 @@
 package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.payload.dto.PostDto;
-import com.github.pedroluiznogueira.blog.payload.mapper.PostMapper;
 import com.github.pedroluiznogueira.blog.entity.Post;
 import com.github.pedroluiznogueira.blog.exception.ResourceNotFoundException;
 import com.github.pedroluiznogueira.blog.repository.PostRepository;
 import com.github.pedroluiznogueira.blog.service.abstraction.BusinessRule;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,27 +13,27 @@ import org.springframework.stereotype.Service;
 public class PostService implements BusinessRule<PostDto> {
 
     private final PostRepository postRepository;
-    private final PostMapper postMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public PostService(PostRepository postRepository, PostMapper postMapper) {
+    public PostService(PostRepository postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
-        this.postMapper = postMapper;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public PostDto create(PostDto postDto) {
-        Post post = postMapper.toEntity(postDto);
+        Post post = modelMapper.map(postDto, Post.class);
         Post createdPost = postRepository.save(post);
 
-        return postMapper.toDto(createdPost);
+        return modelMapper.map(createdPost, PostDto.class);
     }
 
     @Override
     public PostDto getById(Long postId) {
         Post foundPost = checkIfExistsById(postId);
 
-        return postMapper.toDto(foundPost);
+        return modelMapper.map(foundPost, PostDto.class);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class PostService implements BusinessRule<PostDto> {
 
         Post updatedPost = postRepository.save(foundPost);
 
-        return postMapper.toDto(updatedPost);
+        return modelMapper.map(updatedPost, PostDto.class);
     }
 
     @Override

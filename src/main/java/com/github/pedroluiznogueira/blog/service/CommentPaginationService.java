@@ -1,13 +1,11 @@
 package com.github.pedroluiznogueira.blog.service;
 
 import com.github.pedroluiznogueira.blog.entity.Comment;
-import com.github.pedroluiznogueira.blog.entity.Post;
-import com.github.pedroluiznogueira.blog.payload.Pagination;
+import com.github.pedroluiznogueira.blog.payload.pagination.Pagination;
 import com.github.pedroluiznogueira.blog.payload.dto.CommentDto;
-import com.github.pedroluiznogueira.blog.payload.dto.PostDto;
-import com.github.pedroluiznogueira.blog.payload.mapper.CommentMapper;
 import com.github.pedroluiznogueira.blog.repository.CommentRepository;
 import com.github.pedroluiznogueira.blog.service.abstraction.Paginate;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,19 +14,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 import static java.util.stream.Collectors.toList;
 
 @Service
 public class CommentPaginationService implements Paginate<CommentDto, Comment> {
 
     private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public CommentPaginationService(CommentRepository commentRepository, CommentMapper commentMapper) {
+    public CommentPaginationService(CommentRepository commentRepository, ModelMapper modelMapper) {
         this.commentRepository = commentRepository;
-        this.commentMapper = commentMapper;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -57,7 +54,7 @@ public class CommentPaginationService implements Paginate<CommentDto, Comment> {
     @Override
     public Pagination<CommentDto> formatPaginationContent(Page<Comment> postPages) {
         List<Comment> contentToFormat = postPages.getContent();
-        List<CommentDto> formattedContent = contentToFormat.stream().map(commentMapper::toDto).collect(toList());
+        List<CommentDto> formattedContent = contentToFormat.stream().map((comment) -> modelMapper.map(comment, CommentDto.class)).collect(toList());
             Pagination<CommentDto> pagination = new Pagination<CommentDto>().builder()
                 .content(formattedContent)
                 .pageNumber(postPages.getNumber())

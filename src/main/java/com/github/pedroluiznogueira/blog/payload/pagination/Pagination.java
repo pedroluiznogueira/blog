@@ -1,4 +1,4 @@
-package com.github.pedroluiznogueira.blog.payload;
+package com.github.pedroluiznogueira.blog.payload.pagination;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

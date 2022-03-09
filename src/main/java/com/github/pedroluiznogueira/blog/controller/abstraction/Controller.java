@@ -1,6 +1,6 @@
 package com.github.pedroluiznogueira.blog.controller.abstraction;
 
-import com.github.pedroluiznogueira.blog.payload.Pagination;
+import com.github.pedroluiznogueira.blog.payload.pagination.Pagination;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

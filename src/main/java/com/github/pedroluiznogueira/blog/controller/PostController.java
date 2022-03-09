@@ -2,7 +2,7 @@ package com.github.pedroluiznogueira.blog.controller;
 
 import com.github.pedroluiznogueira.blog.controller.abstraction.Controller;
 import com.github.pedroluiznogueira.blog.payload.dto.PostDto;
-import com.github.pedroluiznogueira.blog.payload.Pagination;
+import com.github.pedroluiznogueira.blog.payload.pagination.Pagination;
 import com.github.pedroluiznogueira.blog.service.PostPaginationService;
 import com.github.pedroluiznogueira.blog.service.PostService;
 import com.github.pedroluiznogueira.blog.utility.pagination.Const;

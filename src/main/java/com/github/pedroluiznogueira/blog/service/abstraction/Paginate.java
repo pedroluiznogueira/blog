@@ -1,6 +1,6 @@
 package com.github.pedroluiznogueira.blog.service.abstraction;
 
-import com.github.pedroluiznogueira.blog.payload.Pagination;
+import com.github.pedroluiznogueira.blog.payload.pagination.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
