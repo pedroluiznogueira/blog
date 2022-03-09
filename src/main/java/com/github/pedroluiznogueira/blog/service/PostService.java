@@ -26,18 +26,14 @@ public class PostService implements BusinessRule<PostDto> {
         Post post = postMapper.toPost(postDto);
         Post createdPost = postRepository.save(post);
 
-        PostDto createdPostDto = postMapper.toDto(createdPost);
-
-        return createdPostDto;
+        return postMapper.toDto(createdPost);
     }
 
     @Override
     public PostDto getById(Long postId) {
         Post foundPost = checkIfExistsById(postId);
 
-        PostDto foundPostDto = postMapper.toDto(foundPost);
-
-        return foundPostDto;
+        return postMapper.toDto(foundPost);
     }
 
     @Override
@@ -49,9 +45,8 @@ public class PostService implements BusinessRule<PostDto> {
         foundPost.setContent(postDto.getContent());
 
         Post updatedPost = postRepository.save(foundPost);
-        PostDto updatedPostDto = postMapper.toDto(updatedPost);
 
-        return updatedPostDto;
+        return postMapper.toDto(updatedPost);
     }
 
     @Override

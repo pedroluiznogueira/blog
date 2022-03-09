@@ -27,9 +27,7 @@ public class CommentService implements BusinessRule<CommentDto> {
         Comment comment = commentMapper.toComment(commentDto);
         Comment createdComment = commentRepository.save(comment);
 
-        CommentDto createdCommentDto = commentMapper.toDto(createdComment);
-
-        return createdCommentDto;
+        return commentMapper.toDto(createdComment);
     }
 
     @Override
