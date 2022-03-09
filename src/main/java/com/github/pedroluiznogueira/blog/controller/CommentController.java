@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class CommentController implements Controller<CommentDto> {
 
     @Override
     @PostMapping
-    public ResponseEntity<CommentDto> create(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> create(@Valid @RequestBody CommentDto commentDto) {
         CommentDto commentDtoResponse = commentService.create(commentDto);
         return ResponseEntity.status(201).body(commentDtoResponse);
     }
@@ -59,7 +60,7 @@ public class CommentController implements Controller<CommentDto> {
 
     @Override
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommentDto> update(@PathVariable ("commentId") Long commentId, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> update(@PathVariable ("commentId") Long commentId, @Valid @RequestBody CommentDto commentDto) {
         CommentDto commentDtoResponse = commentService.update(commentId, commentDto);
         return ResponseEntity.status(200).body(commentDtoResponse);
     }
