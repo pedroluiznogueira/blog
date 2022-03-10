@@ -8,6 +8,7 @@ import com.github.pedroluiznogueira.blog.service.PostService;
 import com.github.pedroluiznogueira.blog.utility.pagination.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class PostController implements Controller<PostDto> {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> create(@Valid @RequestBody PostDto postDto) {
         PostDto postDtoResponse = postService.create(postDto);
@@ -52,6 +54,7 @@ public class PostController implements Controller<PostDto> {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{postId}")
     public ResponseEntity<PostDto> update(@PathVariable ("postId") Long postId, @Valid @RequestBody PostDto postDto) {
         PostDto postDtoResponse = postService.update(postId, postDto);
@@ -59,6 +62,7 @@ public class PostController implements Controller<PostDto> {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{postId}")
     public ResponseEntity<String> delete(@PathVariable ("postId") Long postId) {
         String response = postService.delete(postId);
