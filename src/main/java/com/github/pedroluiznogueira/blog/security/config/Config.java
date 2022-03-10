@@ -19,6 +19,8 @@ public class Config extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests() // refeering the authorization
+                .antMatchers(HttpMethod.GET, "/api/**") // all get requests, with this url
+                .permitAll()// will be permited
                 .anyRequest() // refeering to any other request
                 .authenticated() // refeering that they will have to be authenticated
                 .and()
